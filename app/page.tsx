@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-dvh flex flex-col">
       <SiteHeader />
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col min-h-0">
         <HomePage />
       </main>
       <SiteFooter />
