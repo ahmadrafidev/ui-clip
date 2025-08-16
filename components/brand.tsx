@@ -14,9 +14,9 @@ const sizeToClass: Record<NonNullable<BrandProps["size"]>, string> = {
 
 export function Brand({ href = "/", className = "", size = "md" }: BrandProps) {
   return (
-    <Link href={href} aria-label="UI Clip" className={className}>
-      <span className={`font-semibold tracking-tight text-foreground ${sizeToClass[size]}`}>
-        UI Clip
+    <Link href={href} aria-label="Clip" className={`hover:opacity-80 transition-opacity duration-200 ${className}`}>
+      <span className={`font-bold tracking-tight text-foreground ${sizeToClass[size]}`}>
+        Clip
       </span>
     </Link>
   );
