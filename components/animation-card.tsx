@@ -41,18 +41,12 @@ export function AnimationCard({ animation }: AnimationCardProps) {
 
   return (
     <div 
-      className="relative group"
+      className="relative group w-full"
       onClick={handleClick}
     >
-      {/* Copy notification */}
-      {showCopied && (
-        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white text-black px-3 py-1 rounded-md text-sm font-medium z-10 animate-fade-in">
-          Copied!
-        </div>
-      )}
-      
       {/* Animation container */}
-      <div className="relative w-full min-w-52 h-36 sm:h-40 lg:h-44 bg-white/[0.02] backdrop-blur-sm rounded-xl border border-white/[0.08] flex items-center justify-center overflow-hidden transition-all duration-300 hover:bg-white/[0.06] hover:border-white/[0.15] cursor-pointer">
+      <div className="relative w-full min-w-0 sm:min-w-48 md:min-w-56 h-32 sm:h-36 md:h-40 lg:h-48 xl:h-52 bg-white/[0.02] backdrop-blur-sm rounded-xl border border-white/[0.08] flex items-center justify-center overflow-hidden transition-all duration-300 hover:bg-white/[0.06] hover:border-white/[0.15] cursor-pointer">
+        
         {/* Background gradient for visual interest */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
@@ -62,17 +56,23 @@ export function AnimationCard({ animation }: AnimationCardProps) {
         </div>
         
         {/* Hover overlay with copy hint */}
-        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-baseline-last justify-center">
-          <div className="text-white/80 text-xs text-center px-2 pb-2 font-medium">
-            Click to copy
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-end justify-center">
+          <div className="text-white/90 text-xs md:text-sm text-center px-2 pb-2 font-medium">
+            {showCopied ? (
+              <div>Copied!</div>
+            ) : (
+              <>
+                <div className="hidden sm:block">Tap to copy</div>
+              </>
+            )}
           </div>
         </div>
-      </div>
-      
-      {/* Animation title on hover */}
-      <div className="absolute -bottom-10 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none z-20">
-        <div className="text-black text-sm font-medium bg-white px-3 py-1 rounded-md mx-auto inline-block shadow-lg">
-          {animation.title}
+        
+        {/* Animation title overlay */}
+        <div className="absolute top-2 left-2 right-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none z-15">
+          <div className="text-black text-xs md:text-sm font-medium bg-white px-2 py-1 rounded-md mx-auto inline-block max-w-full truncate shadow-sm">
+            {animation.title}
+          </div>
         </div>
       </div>
     </div>
