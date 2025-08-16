@@ -1,8 +1,8 @@
 import React from 'react';
 
-// Animation components exports
-export * from './motion-button';
-export * from './loading-animations';
+// Animation components exports 
+export * from './buttons';
+export * from './loaders';
 
 // Animation data types
 export interface Animation {

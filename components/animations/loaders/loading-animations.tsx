@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 export function SpinningLoader() {
   return (
     <motion.div
-      className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full"
+      className="w-8 h-8 border-3 border-gray-300 border-t-gray-800 rounded-full"
       animate={{ rotate: 360 }}
       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
     />
@@ -37,7 +37,7 @@ export function DotsLoader() {
 export function PulseLoader() {
   return (
     <motion.div
-      className="w-8 h-8 bg-white rounded-full"
+      className="w-8 h-8 bg-gray-700 rounded-full"
       animate={{
         scale: [1, 1.2, 1],
         opacity: [1, 0.7, 1]
