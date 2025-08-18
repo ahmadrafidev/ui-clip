@@ -1208,17 +1208,14 @@ export function HomePage() {
   return (
     <section className="relative flex-1 flex flex-col min-h-0 mx-auto max-w-6xl">
       {/* Hero Section */}
-      <div className="px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl leading-none font-bold tracking-tight text-white mb-4">
-          Clip
-        </h1>
-        <p className="text-white/70 text-xl sm:text-2xl font-medium max-w-2xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-8 text-center py-10 md:py-12">
+        <h1 className="text-white/70 text-xl sm:text-2xl font-medium max-w-2xl mx-auto">
           Click the animation to copy the component code
-        </p>
+        </h1>
       </div>
 
       {/* Animation Grid */}
-      <div className="flex-1 px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="flex-1 px-4 sm:px-6 lg:px-8 pb-6 md:pb-10">
         <AnimationGrid animations={sampleAnimations} />
       </div>
     </section>

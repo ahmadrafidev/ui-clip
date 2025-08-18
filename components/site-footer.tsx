@@ -5,7 +5,7 @@ export function SiteFooter() {
         <span className="text-sm md:text-base text-foreground/70">
           Built by {""}
           <a href="https://x.com/rafiwiranaa" target="_blank" rel="noreferrer" className="hover:underline text-foreground">
-            Rafi
+            Rafi Wirana
           </a>
         </span>
       </div>
