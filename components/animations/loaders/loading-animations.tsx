@@ -218,3 +218,206 @@ export function GridLoader() {
     </div>
   );
 }
+
+// Additional Advanced Loaders
+export function DNALoader() {
+  return (
+    <div className="relative w-12 h-8">
+      {Array.from({ length: 8 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-white rounded-full"
+          style={{
+            left: `${i * 8}px`,
+            top: '50%',
+          }}
+          animate={{
+            y: [0, -12, 0, 12, 0],
+            opacity: [0.3, 1, 0.3, 1, 0.3],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: i * 0.1,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function LiquidLoader() {
+  return (
+    <div className="relative w-12 h-12 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 bg-white rounded-full"
+        animate={{
+          height: ["20%", "80%", "20%"],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-t from-white/30 to-transparent"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}
+
+export function ParticleLoader() {
+  return (
+    <div className="relative w-12 h-12">
+      {Array.from({ length: 6 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 bg-white rounded-full"
+          style={{
+            left: '50%',
+            top: '50%',
+            marginLeft: '-4px',
+            marginTop: '-4px',
+          }}
+          animate={{
+            x: [0, Math.cos(i * 60 * Math.PI / 180) * 20],
+            y: [0, Math.sin(i * 60 * Math.PI / 180) * 20],
+            scale: [0, 1, 0],
+            opacity: [0, 1, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            delay: i * 0.1,
+            ease: "easeOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function TypewriterLoader() {
+  const text = "Loading...";
+  return (
+    <div className="flex">
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          className="text-white font-mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            delay: i * 0.1,
+            repeatDelay: 2
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+      <motion.span
+        className="text-white font-mono ml-1"
+        animate={{ opacity: [0, 1, 0] }}
+        transition={{
+          duration: 0.5,
+          repeat: Infinity,
+        }}
+      >
+        |
+      </motion.span>
+    </div>
+  );
+}
+
+export function PendulumLoader() {
+  return (
+    <div className="flex space-x-1 items-end h-12">
+      {Array.from({ length: 5 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="w-2 h-2 bg-white rounded-full"
+          animate={{
+            y: [0, -20, 0],
+            x: i === 0 ? [-8, 8, -8] : i === 4 ? [8, -8, 8] : 0,
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            delay: i * 0.1,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function SpiralLoader() {
+  return (
+    <div className="relative w-12 h-12">
+      {Array.from({ length: 8 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-white rounded-full"
+          style={{
+            left: '50%',
+            top: '50%',
+            marginLeft: '-2px',
+            marginTop: '-2px',
+          }}
+          animate={{
+            x: [0, Math.cos(i * 45 * Math.PI / 180) * (16 - i * 2)],
+            y: [0, Math.sin(i * 45 * Math.PI / 180) * (16 - i * 2)],
+            opacity: [0, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: i * 0.2,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function MatrixLoader() {
+  return (
+    <div className="grid grid-cols-4 gap-0.5 w-10 h-10">
+      {Array.from({ length: 16 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="w-2 h-2 bg-white/20"
+          animate={{
+            backgroundColor: [
+              'rgba(255,255,255,0.1)',
+              'rgba(255,255,255,1)',
+              'rgba(255,255,255,0.1)'
+            ],
+            scale: [0.5, 1, 0.5],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            delay: (i % 4) * 0.1 + Math.floor(i / 4) * 0.2,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}

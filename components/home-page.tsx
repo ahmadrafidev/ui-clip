@@ -28,13 +28,26 @@ import {
   OrbitLoader,
   SquareLoader,
   RingLoader,
-  GridLoader
+  GridLoader,
+  DNALoader,
+  LiquidLoader,
+  ParticleLoader,
+  TypewriterLoader,
+  PendulumLoader,
+  SpiralLoader,
+  MatrixLoader
 } from "./animations/loaders/loading-animations";
 import {
   CircularProgress,
   AnimatedCounter,
   RadialProgress,
-  MultiStepProgress
+  MultiStepProgress,
+  LiquidProgress,
+  HeartbeatProgress,
+  WaveProgress,
+  MorphingProgress,
+  GlowProgress,
+  SegmentedProgress
 } from "./animations/loaders/progress-animations";
 import {
   TextSkeleton,
@@ -925,7 +938,425 @@ export function MultiStepProgress() {
       />
     </div>
   ))}
-</div>`
+</div>`,
+
+  dnaLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-8">
+  {Array.from({ length: 8 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-1 h-1 bg-white rounded-full"
+      style={{
+        left: \`\${i * 8}px\`,
+        top: '50%',
+      }}
+      animate={{
+        y: [0, -12, 0, 12, 0],
+        opacity: [0.3, 1, 0.3, 1, 0.3],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  liquidLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-12 bg-white/10 rounded-full overflow-hidden">
+  <motion.div
+    className="absolute bottom-0 left-0 right-0 bg-white rounded-full"
+    animate={{
+      height: ["20%", "80%", "20%"],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+  <motion.div
+    className="absolute inset-0 bg-gradient-to-t from-white/30 to-transparent"
+    animate={{
+      scale: [1, 1.1, 1],
+      opacity: [0.5, 0.8, 0.5],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+</div>`,
+
+  particleLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-12">
+  {Array.from({ length: 6 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-2 h-2 bg-white rounded-full"
+      style={{
+        left: '50%',
+        top: '50%',
+        marginLeft: '-4px',
+        marginTop: '-4px',
+      }}
+      animate={{
+        x: [0, Math.cos(i * 60 * Math.PI / 180) * 20],
+        y: [0, Math.sin(i * 60 * Math.PI / 180) * 20],
+        scale: [0, 1, 0],
+        opacity: [0, 1, 0],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "easeOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  typewriterLoader: `import { motion } from 'motion/react';
+
+export function TypewriterLoader() {
+  const text = "Loading...";
+  return (
+    <div className="flex">
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          className="text-white font-mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            delay: i * 0.1,
+            repeatDelay: 2
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+      <motion.span
+        className="text-white font-mono ml-1"
+        animate={{ opacity: [0, 1, 0] }}
+        transition={{
+          duration: 0.5,
+          repeat: Infinity,
+        }}
+      >
+        |
+      </motion.span>
+    </div>
+  );
+}`,
+
+  pendulumLoader: `import { motion } from 'motion/react';
+
+<div className="flex space-x-1 items-end h-12">
+  {Array.from({ length: 5 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="w-2 h-2 bg-white rounded-full"
+      animate={{
+        y: [0, -20, 0],
+        x: i === 0 ? [-8, 8, -8] : i === 4 ? [8, -8, 8] : 0,
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  spiralLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-12">
+  {Array.from({ length: 8 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-1 h-1 bg-white rounded-full"
+      style={{
+        left: '50%',
+        top: '50%',
+        marginLeft: '-2px',
+        marginTop: '-2px',
+      }}
+      animate={{
+        x: [0, Math.cos(i * 45 * Math.PI / 180) * (16 - i * 2)],
+        y: [0, Math.sin(i * 45 * Math.PI / 180) * (16 - i * 2)],
+        opacity: [0, 1],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        delay: i * 0.2,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  matrixLoader: `import { motion } from 'motion/react';
+
+<div className="grid grid-cols-4 gap-0.5 w-10 h-10">
+  {Array.from({ length: 16 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="w-2 h-2 bg-white/20"
+      animate={{
+        backgroundColor: [
+          'rgba(255,255,255,0.1)',
+          'rgba(255,255,255,1)',
+          'rgba(255,255,255,0.1)'
+        ],
+        scale: [0.5, 1, 0.5],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: (i % 4) * 0.1 + Math.floor(i / 4) * 0.2,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  liquidProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function LiquidProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-8 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="absolute bottom-0 left-0 bg-white"
+        style={{ width: \`\${progress}%\`, height: '100%' }}
+        animate={{
+          borderRadius: ["0 50% 50% 0", "0 20% 20% 0", "0 50% 50% 0"],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-xs font-semibold text-black/70">
+          {progress}%
+        </span>
+      </div>
+    </div>
+  );
+}`,
+
+  heartbeatProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function HeartbeatProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-4 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white rounded-full"
+        style={{ width: \`\${progress}%\` }}
+        animate={{
+          scaleY: [1, 1.5, 1, 1.8, 1],
+          opacity: [0.7, 1, 0.7, 1, 0.7],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}`,
+
+  waveProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function WaveProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1.5));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-6 bg-white/10 rounded-lg overflow-hidden">
+      <motion.div
+        className="absolute bottom-0 left-0 bg-white"
+        style={{ width: \`\${progress}%\`, height: '100%' }}
+      />
+      <svg 
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 128 24"
+        preserveAspectRatio="none"
+      >
+        <motion.path
+          d="M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z"
+          fill="rgba(255,255,255,0.8)"
+          animate={{
+            d: [
+              "M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+              "M0,12 Q16,20 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+              "M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+            ]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          clipPath={\`inset(0 \${100 - progress}% 0 0)\`}
+        />
+      </svg>
+    </div>
+  );
+}`,
+
+  morphingProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function MorphingProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-6 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white"
+        style={{ width: \`\${progress}%\` }}
+        animate={{
+          borderRadius: progress < 25 ? 0 : progress < 50 ? 4 : progress < 75 ? 12 : 24,
+        }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut"
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-xs font-bold text-black/80">
+          {Math.round(progress)}%
+        </span>
+      </div>
+    </div>
+  );
+}`,
+
+  glowProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function GlowProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.8));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-3 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white rounded-full relative"
+        style={{ width: \`\${progress}%\` }}
+        animate={{
+          boxShadow: [
+            '0 0 10px rgba(255,255,255,0.5)',
+            '0 0 20px rgba(255,255,255,0.8)',
+            '0 0 10px rgba(255,255,255,0.5)',
+          ]
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}`,
+
+  segmentedProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function SegmentedProgress() {
+  const [progress, setProgress] = useState(0);
+  const segments = 10;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 120);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex space-x-1 w-32">
+      {Array.from({ length: segments }, (_, i) => {
+        const segmentProgress = (progress - (i * 10)) / 10;
+        const isActive = segmentProgress > 0;
+        const fillLevel = Math.min(1, Math.max(0, segmentProgress));
+        
+        return (
+          <div key={i} className="flex-1 h-3 bg-white/10 rounded-sm overflow-hidden">
+            <motion.div
+              className="h-full bg-white rounded-sm"
+              initial={{ height: '0%' }}
+              animate={{ 
+                height: isActive ? \`\${fillLevel * 100}%\` : '0%',
+                opacity: isActive ? 1 : 0.3,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut"
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}`
 };
 
 const sampleAnimations: Animation[] = [
@@ -1201,6 +1632,114 @@ const sampleAnimations: Animation[] = [
     ANIMATION_CATEGORIES.SKELETON,
     ListSkeleton,
     animationCodes.listSkeleton
+  ),
+
+  // More Advanced Loader Animations
+  createAnimation(
+    'dna-loader',
+    'DNA Loader',
+    'DNA helix pattern with vertical oscillation',
+    ANIMATION_CATEGORIES.LOADERS,
+    DNALoader,
+    animationCodes.dnaLoader
+  ),
+  createAnimation(
+    'liquid-loader',
+    'Liquid Loader',
+    'Liquid filling effect with overlay gradient',
+    ANIMATION_CATEGORIES.LOADERS,
+    LiquidLoader,
+    animationCodes.liquidLoader
+  ),
+  createAnimation(
+    'particle-loader',
+    'Particle Loader',
+    'Particles exploding outward in circular pattern',
+    ANIMATION_CATEGORIES.LOADERS,
+    ParticleLoader,
+    animationCodes.particleLoader
+  ),
+  createAnimation(
+    'typewriter-loader',
+    'Typewriter Loader',
+    'Text typing effect with blinking cursor',
+    ANIMATION_CATEGORIES.LOADERS,
+    TypewriterLoader,
+    animationCodes.typewriterLoader
+  ),
+  createAnimation(
+    'pendulum-loader',
+    'Pendulum Loader',
+    'Physics-based pendulum motion effect',
+    ANIMATION_CATEGORIES.LOADERS,
+    PendulumLoader,
+    animationCodes.pendulumLoader
+  ),
+  createAnimation(
+    'spiral-loader',
+    'Spiral Loader',
+    'Expanding spiral with fading particles',
+    ANIMATION_CATEGORIES.LOADERS,
+    SpiralLoader,
+    animationCodes.spiralLoader
+  ),
+  createAnimation(
+    'matrix-loader',
+    'Matrix Loader',
+    'Matrix-style grid with cascading animation',
+    ANIMATION_CATEGORIES.LOADERS,
+    MatrixLoader,
+    animationCodes.matrixLoader
+  ),
+
+  // More Advanced Progress Animations
+  createAnimation(
+    'liquid-progress',
+    'Liquid Progress',
+    'Liquid-style progress with flowing edges',
+    ANIMATION_CATEGORIES.PROGRESS,
+    LiquidProgress,
+    animationCodes.liquidProgress
+  ),
+  createAnimation(
+    'heartbeat-progress',
+    'Heartbeat Progress',
+    'Progress bar with heartbeat pulse effect',
+    ANIMATION_CATEGORIES.PROGRESS,
+    HeartbeatProgress,
+    animationCodes.heartbeatProgress
+  ),
+  createAnimation(
+    'wave-progress',
+    'Wave Progress',
+    'SVG wave animation with clipping mask',
+    ANIMATION_CATEGORIES.PROGRESS,
+    WaveProgress,
+    animationCodes.waveProgress
+  ),
+  createAnimation(
+    'morphing-progress',
+    'Morphing Progress',
+    'Shape-morphing progress with rounded transitions',
+    ANIMATION_CATEGORIES.PROGRESS,
+    MorphingProgress,
+    animationCodes.morphingProgress
+  ),
+  createAnimation(
+    'glow-progress',
+    'Glow Progress',
+    'Progress bar with glowing light effects',
+    ANIMATION_CATEGORIES.PROGRESS,
+    GlowProgress,
+    animationCodes.glowProgress
+  ),
+  createAnimation(
+    'segmented-progress',
+    'Segmented Progress',
+    'Multi-segment progress with individual fills',
+    ANIMATION_CATEGORIES.PROGRESS,
+    SegmentedProgress,
+    animationCodes.segmentedProgress
   )
 ];
 

@@ -157,3 +157,268 @@ export function MultiStepProgress() {
     </div>
   );
 }
+
+// Additional Advanced Progress Animations
+export function LiquidProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-8 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="absolute bottom-0 left-0 bg-white"
+        style={{ width: `${progress}%`, height: '100%' }}
+        animate={{
+          borderRadius: ["0 50% 50% 0", "0 20% 20% 0", "0 50% 50% 0"],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: [
+            'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+            'linear-gradient(90deg, transparent 40%, rgba(255,255,255,0.3) 90%, transparent 100%)',
+            'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+          ]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-xs font-semibold text-black/70">
+          {progress}%
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export function HeartbeatProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-4 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white rounded-full"
+        style={{ width: `${progress}%` }}
+        animate={{
+          scaleY: [1, 1.5, 1, 1.8, 1],
+          opacity: [0.7, 1, 0.7, 1, 0.7],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute right-0 top-0 w-2 h-full bg-white/50"
+        animate={{
+          scaleX: [0.5, 2, 0.5, 2.5, 0.5],
+          x: [0, -4, 0, -6, 0],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}
+
+export function WaveProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1.5));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-6 bg-white/10 rounded-lg overflow-hidden">
+      <motion.div
+        className="absolute bottom-0 left-0 bg-white"
+        style={{ width: `${progress}%`, height: '100%' }}
+      />
+      <svg 
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 128 24"
+        preserveAspectRatio="none"
+      >
+        <motion.path
+          d="M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z"
+          fill="rgba(255,255,255,0.8)"
+          animate={{
+            d: [
+              "M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+              "M0,12 Q16,20 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+              "M0,12 Q16,4 32,12 T64,12 T96,12 T128,12 L128,24 L0,24 Z",
+            ]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          clipPath={`inset(0 ${100 - progress}% 0 0)`}
+        />
+      </svg>
+    </div>
+  );
+}
+
+export function MorphingProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getShape = () => {
+    if (progress < 25) return 'rounded-none';
+    if (progress < 50) return 'rounded-sm';
+    if (progress < 75) return 'rounded-lg';
+    return 'rounded-full';
+  };
+
+  return (
+    <div className="relative w-32 h-6 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className={`h-full bg-white ${getShape()}`}
+        style={{ width: `${progress}%` }}
+        animate={{
+          borderRadius: progress < 25 ? 0 : progress < 50 ? 4 : progress < 75 ? 12 : 24,
+        }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center"
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <span className="text-xs font-bold text-black/80">
+          {Math.round(progress)}%
+        </span>
+      </motion.div>
+    </div>
+  );
+}
+
+export function GlowProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.8));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-3 bg-white/10 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white rounded-full relative"
+        style={{ width: `${progress}%` }}
+        animate={{
+          boxShadow: [
+            '0 0 10px rgba(255,255,255,0.5)',
+            '0 0 20px rgba(255,255,255,0.8)',
+            '0 0 10px rgba(255,255,255,0.5)',
+          ]
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute right-0 top-0 w-6 h-full bg-gradient-to-l from-white to-transparent"
+        animate={{
+          opacity: [0.5, 1, 0.5],
+          scaleX: [0.8, 1.2, 0.8],
+        }}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}
+
+export function SegmentedProgress() {
+  const [progress, setProgress] = useState(0);
+  const segments = 10;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 120);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex space-x-1 w-32">
+      {Array.from({ length: segments }, (_, i) => {
+        const segmentProgress = (progress - (i * 10)) / 10;
+        const isActive = segmentProgress > 0;
+        const fillLevel = Math.min(1, Math.max(0, segmentProgress));
+        
+        return (
+          <div key={i} className="flex-1 h-3 bg-white/10 rounded-sm overflow-hidden">
+            <motion.div
+              className="h-full bg-white rounded-sm"
+              initial={{ height: '0%' }}
+              animate={{ 
+                height: isActive ? `${fillLevel * 100}%` : '0%',
+                opacity: isActive ? 1 : 0.3,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut"
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
