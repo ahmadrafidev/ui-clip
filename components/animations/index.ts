@@ -1,25 +1,10 @@
-import React from 'react';
-
 // Animation components exports 
 export * from './buttons';
 export * from './loaders';
 
-// Animation data types
-export interface Animation {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  component: () => React.ReactElement;
-  code: string;
-}
+// Animation types and constants
+export * from './types';
 
-// Animation categories
-export const ANIMATION_CATEGORIES = {
-  BUTTONS: 'buttons',
-  LOADERS: 'loaders',
-  PROGRESS: 'progress',
-  SKELETON: 'skeleton',
-} as const;
-
-export type AnimationCategory = typeof ANIMATION_CATEGORIES[keyof typeof ANIMATION_CATEGORIES];
+// Animation data and utilities
+export * from './data';
+export * from './utils/animation-factory';

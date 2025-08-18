@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 
-import { AnimationCard, type Animation } from './animation-card';
-import { ANIMATION_CATEGORIES, type AnimationCategory } from './animations';
+import { AnimationCard } from './animation-card';
+import { ANIMATION_CATEGORIES, type AnimationCategory, type Animation } from './animations/types';
 
 interface AnimationGridProps {
   animations: Animation[];

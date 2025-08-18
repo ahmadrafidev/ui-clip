@@ -1,15 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-
-export interface Animation {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  component: () => React.ReactElement;
-  code: string;
-}
+import { type Animation } from './animations/types';
 
 interface AnimationCardProps {
   animation: Animation;
