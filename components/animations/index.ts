@@ -19,6 +19,7 @@ export const ANIMATION_CATEGORIES = {
   BUTTONS: 'buttons',
   LOADERS: 'loaders',
   PROGRESS: 'progress',
+  SKELETON: 'skeleton',
 } as const;
 
 export type AnimationCategory = typeof ANIMATION_CATEGORIES[keyof typeof ANIMATION_CATEGORIES];

@@ -18,7 +18,32 @@ import {
   ElasticButton,
   RippleButton
 } from "./animations/buttons/advanced-button-motions";
-import { SpinningLoader, DotsLoader, PulseLoader, ProgressBar } from "./animations/loaders/loading-animations";
+import { 
+  SpinningLoader, 
+  DotsLoader, 
+  PulseLoader, 
+  ProgressBar,
+  WaveLoader,
+  BounceLoader,
+  OrbitLoader,
+  SquareLoader,
+  RingLoader,
+  GridLoader
+} from "./animations/loaders/loading-animations";
+import {
+  CircularProgress,
+  AnimatedCounter,
+  RadialProgress,
+  MultiStepProgress
+} from "./animations/loaders/progress-animations";
+import {
+  TextSkeleton,
+  CardSkeleton,
+  AvatarSkeleton,
+  WaveSkeleton,
+  ShimmerSkeleton,
+  ListSkeleton
+} from "./animations/loaders/skeleton-animations";
 import { ANIMATION_CATEGORIES, type Animation } from "./animations";
 
 const createAnimation = (
@@ -429,6 +454,477 @@ export function RippleButton() {
       ease: "easeInOut"
     }}
   />
+</div>`,
+
+  waveLoader: `import { motion } from 'motion/react';
+
+<div className="flex space-x-1 items-end">
+  {[0, 1, 2, 3, 4].map((i) => (
+    <motion.div
+      key={i}
+      className="w-1 bg-white rounded-full"
+      animate={{
+        height: [8, 24, 8],
+      }}
+      transition={{
+        duration: 0.8,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  bounceLoader: `import { motion } from 'motion/react';
+
+<div className="flex space-x-2">
+  {[0, 1, 2].map((i) => (
+    <motion.div
+      key={i}
+      className="w-3 h-3 bg-white rounded-full"
+      animate={{
+        y: [0, -16, 0],
+      }}
+      transition={{
+        duration: 0.6,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  orbitLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-12">
+  <motion.div
+    className="absolute w-3 h-3 bg-white rounded-full"
+    style={{ 
+      top: '50%', 
+      left: '50%',
+      marginTop: '-6px',
+      marginLeft: '-6px'
+    }}
+    animate={{
+      x: [0, 18, 0, -18, 0],
+      y: [0, -18, 0, 18, 0],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  />
+  <motion.div
+    className="absolute w-2 h-2 bg-white/70 rounded-full"
+    style={{ 
+      top: '50%', 
+      left: '50%',
+      marginTop: '-4px',
+      marginLeft: '-4px'
+    }}
+    animate={{
+      x: [0, -12, 0, 12, 0],
+      y: [0, 12, 0, -12, 0],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  />
+</div>`,
+
+  squareLoader: `import { motion } from 'motion/react';
+
+<motion.div
+  className="w-8 h-8 border-2 border-white"
+  animate={{
+    rotate: [0, 90, 180, 270, 360],
+    borderRadius: ["0%", "25%", "50%", "25%", "0%"],
+  }}
+  transition={{
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }}
+/>`,
+
+  ringLoader: `import { motion } from 'motion/react';
+
+<div className="relative w-10 h-10">
+  {[0, 1, 2].map((i) => (
+    <motion.div
+      key={i}
+      className="absolute inset-0 border-2 border-transparent border-t-white rounded-full"
+      animate={{ rotate: 360 }}
+      transition={{
+        duration: 1.5 - i * 0.3,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transform: \`scale(\${1 - i * 0.2})\`,
+        opacity: 1 - i * 0.3
+      }}
+    />
+  ))}
+</div>`,
+
+  gridLoader: `import { motion } from 'motion/react';
+
+<div className="grid grid-cols-3 gap-1">
+  {Array.from({ length: 9 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="w-2 h-2 bg-white rounded-sm"
+      animate={{
+        scale: [0, 1, 0],
+        opacity: [0, 1, 0]
+      }}
+      transition={{
+        duration: 1.2,
+        repeat: Infinity,
+        delay: i * 0.1
+      }}
+    />
+  ))}
+</div>`,
+
+  circularProgress: `import { motion } from 'motion/react';
+
+<div className="relative w-12 h-12">
+  <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+    <path
+      className="stroke-white/20"
+      fill="none"
+      strokeWidth="3"
+      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+    />
+    <motion.path
+      className="stroke-white"
+      fill="none"
+      strokeWidth="3"
+      strokeLinecap="round"
+      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+      initial={{ strokeDasharray: "0 100" }}
+      animate={{ strokeDasharray: "75 100" }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut"
+      }}
+    />
+  </svg>
+  <div className="absolute inset-0 flex items-center justify-center">
+    <motion.span 
+      className="text-xs font-semibold text-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+    >
+      75%
+    </motion.span>
+  </div>
+</div>`,
+
+  animatedCounter: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function AnimatedCounter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex items-center space-x-2">
+      <motion.div
+        className="text-2xl font-bold text-white"
+        key={count}
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        {count}%
+      </motion.div>
+      <motion.div
+        className="w-16 h-2 bg-white/20 rounded-full overflow-hidden"
+      >
+        <motion.div
+          className="h-full bg-white rounded-full"
+          animate={{ width: \`\${count}%\` }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        />
+      </motion.div>
+    </div>
+  );
+}`,
+
+  radialProgress: `import { motion } from 'motion/react';
+
+<div className="relative w-16 h-16">
+  <svg className="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
+    <path
+      className="stroke-white/10"
+      fill="none"
+      strokeWidth="2"
+      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+    />
+    <motion.path
+      className="stroke-white"
+      fill="none"
+      strokeWidth="2"
+      strokeLinecap="round"
+      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+      initial={{ strokeDasharray: "0 100" }}
+      animate={{ 
+        strokeDasharray: ["0 100", "25 100", "50 100", "75 100", "100 100", "75 100", "50 100", "25 100"]
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+    />
+  </svg>
+  <motion.div 
+    className="absolute inset-0 flex items-center justify-center"
+    animate={{ rotate: 360 }}
+    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+  >
+    <div className="w-2 h-2 bg-white rounded-full" />
+  </motion.div>
+</div>`,
+
+  multiStepProgress: `import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+
+export function MultiStepProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getStepColor = (stepIndex) => {
+    const stepProgress = (progress - stepIndex * 25) / 25;
+    if (stepProgress <= 0) return 'bg-white/20';
+    if (stepProgress >= 1) return 'bg-white';
+    return 'bg-white/60';
+  };
+
+  return (
+    <div className="space-y-2 w-32">
+      {Array.from({ length: 4 }, (_, i) => (
+        <div key={i} className="flex items-center space-x-2">
+          <motion.div
+            className={\`w-3 h-3 rounded-full \${getStepColor(i)}\`}
+            animate={{
+              scale: progress >= i * 25 && progress < (i + 1) * 25 ? [1, 1.3, 1] : 1
+            }}
+            transition={{ duration: 0.5, repeat: progress >= i * 25 && progress < (i + 1) * 25 ? Infinity : 0 }}
+          />
+          <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-white rounded-full"
+              animate={{
+                width: \`\${Math.max(0, Math.min(100, (progress - i * 25) * 4))}%\`
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}`,
+
+  textSkeleton: `import { motion } from 'motion/react';
+
+<div className="space-y-2 w-32">
+  {[100, 80, 60].map((width, i) => (
+    <motion.div
+      key={i}
+      className="h-3 bg-white/20 rounded"
+      style={{ width: \`\${width}%\` }}
+      animate={{
+        opacity: [0.4, 0.8, 0.4],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: i * 0.2,
+        ease: "easeInOut"
+      }}
+    />
+  ))}
+</div>`,
+
+  cardSkeleton: `import { motion } from 'motion/react';
+
+<div className="w-32 space-y-2">
+  <motion.div
+    className="h-16 bg-white/20 rounded"
+    animate={{
+      opacity: [0.4, 0.8, 0.4],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+  <motion.div
+    className="h-3 bg-white/20 rounded w-3/4"
+    animate={{
+      opacity: [0.4, 0.8, 0.4],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      delay: 0.2,
+      ease: "easeInOut"
+    }}
+  />
+  <motion.div
+    className="h-3 bg-white/20 rounded w-1/2"
+    animate={{
+      opacity: [0.4, 0.8, 0.4],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      delay: 0.4,
+      ease: "easeInOut"
+    }}
+  />
+</div>`,
+
+  avatarSkeleton: `import { motion } from 'motion/react';
+
+<div className="flex items-center space-x-3">
+  <motion.div
+    className="w-8 h-8 bg-white/20 rounded-full"
+    animate={{
+      opacity: [0.4, 0.8, 0.4],
+    }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+  <div className="space-y-1">
+    <motion.div
+      className="h-3 bg-white/20 rounded w-16"
+      animate={{
+        opacity: [0.4, 0.8, 0.4],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: 0.2,
+        ease: "easeInOut"
+      }}
+    />
+    <motion.div
+      className="h-2 bg-white/20 rounded w-12"
+      animate={{
+        opacity: [0.4, 0.8, 0.4],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: 0.4,
+        ease: "easeInOut"
+      }}
+    />
+  </div>
+</div>`,
+
+  waveSkeleton: `import { motion } from 'motion/react';
+
+<div className="space-y-2 w-32">
+  {[0, 1, 2].map((i) => (
+    <motion.div
+      key={i}
+      className="h-3 bg-gradient-to-r from-white/10 via-white/30 to-white/10 rounded"
+      animate={{
+        x: ['-100%', '100%'],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        delay: i * 0.1,
+        ease: "linear"
+      }}
+      style={{
+        backgroundSize: '200% 100%',
+      }}
+    />
+  ))}
+</div>`,
+
+  shimmerSkeleton: `import { motion } from 'motion/react';
+
+<div className="w-32 h-20 bg-white/10 rounded overflow-hidden relative">
+  <motion.div
+    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+    animate={{
+      x: ['-100%', '100%'],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  />
+</div>`,
+
+  listSkeleton: `import { motion } from 'motion/react';
+
+<div className="space-y-3 w-32">
+  {[0, 1, 2, 3].map((i) => (
+    <div key={i} className="flex items-center space-x-2">
+      <motion.div
+        className="w-3 h-3 bg-white/20 rounded"
+        animate={{
+          opacity: [0.4, 0.8, 0.4],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          delay: i * 0.1,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className={\`h-2 bg-white/20 rounded \${
+          i === 0 ? 'w-20' : i === 1 ? 'w-16' : i === 2 ? 'w-18' : 'w-14'
+        }\`}
+        animate={{
+          opacity: [0.4, 0.8, 0.4],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          delay: i * 0.1 + 0.2,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  ))}
 </div>`
 };
 
@@ -571,6 +1067,140 @@ const sampleAnimations: Animation[] = [
     ANIMATION_CATEGORIES.PROGRESS,
     ProgressBar,
     animationCodes.progressBar
+  ),
+
+  // Advanced Loader Animations
+  createAnimation(
+    'wave-loader',
+    'Wave Loader',
+    'Animated wave bars with staggered heights',
+    ANIMATION_CATEGORIES.LOADERS,
+    WaveLoader,
+    animationCodes.waveLoader
+  ),
+  createAnimation(
+    'bounce-loader',
+    'Bounce Loader',
+    'Bouncing dots with vertical motion',
+    ANIMATION_CATEGORIES.LOADERS,
+    BounceLoader,
+    animationCodes.bounceLoader
+  ),
+  createAnimation(
+    'orbit-loader',
+    'Orbit Loader',
+    'Multiple dots orbiting in different paths',
+    ANIMATION_CATEGORIES.LOADERS,
+    OrbitLoader,
+    animationCodes.orbitLoader
+  ),
+  createAnimation(
+    'square-loader',
+    'Square Loader',
+    'Morphing square with rotation and border radius',
+    ANIMATION_CATEGORIES.LOADERS,
+    SquareLoader,
+    animationCodes.squareLoader
+  ),
+  createAnimation(
+    'ring-loader',
+    'Ring Loader',
+    'Multiple concentric rings rotating',
+    ANIMATION_CATEGORIES.LOADERS,
+    RingLoader,
+    animationCodes.ringLoader
+  ),
+  createAnimation(
+    'grid-loader',
+    'Grid Loader',
+    'Grid pattern with staggered scale animation',
+    ANIMATION_CATEGORIES.LOADERS,
+    GridLoader,
+    animationCodes.gridLoader
+  ),
+
+  // Progress Animations
+  createAnimation(
+    'circular-progress',
+    'Circular Progress',
+    'SVG circular progress with percentage',
+    ANIMATION_CATEGORIES.PROGRESS,
+    CircularProgress,
+    animationCodes.circularProgress
+  ),
+  createAnimation(
+    'animated-counter',
+    'Animated Counter',
+    'Number counter with progress bar',
+    ANIMATION_CATEGORIES.PROGRESS,
+    AnimatedCounter,
+    animationCodes.animatedCounter
+  ),
+  createAnimation(
+    'radial-progress',
+    'Radial Progress',
+    'Radial progress with rotating center dot',
+    ANIMATION_CATEGORIES.PROGRESS,
+    RadialProgress,
+    animationCodes.radialProgress
+  ),
+  createAnimation(
+    'multi-step-progress',
+    'Multi-Step Progress',
+    'Complex multi-step progress visualization',
+    ANIMATION_CATEGORIES.PROGRESS,
+    MultiStepProgress,
+    animationCodes.multiStepProgress
+  ),
+
+  // Skeleton Animations
+  createAnimation(
+    'text-skeleton',
+    'Text Skeleton',
+    'Text placeholder with pulsing opacity',
+    ANIMATION_CATEGORIES.SKELETON,
+    TextSkeleton,
+    animationCodes.textSkeleton
+  ),
+  createAnimation(
+    'card-skeleton',
+    'Card Skeleton',
+    'Card layout skeleton loader',
+    ANIMATION_CATEGORIES.SKELETON,
+    CardSkeleton,
+    animationCodes.cardSkeleton
+  ),
+  createAnimation(
+    'avatar-skeleton',
+    'Avatar Skeleton',
+    'Profile avatar with text skeleton',
+    ANIMATION_CATEGORIES.SKELETON,
+    AvatarSkeleton,
+    animationCodes.avatarSkeleton
+  ),
+  createAnimation(
+    'wave-skeleton',
+    'Wave Skeleton',
+    'Gradient wave moving across skeleton',
+    ANIMATION_CATEGORIES.SKELETON,
+    WaveSkeleton,
+    animationCodes.waveSkeleton
+  ),
+  createAnimation(
+    'shimmer-skeleton',
+    'Shimmer Skeleton',
+    'Shimmer effect across skeleton surface',
+    ANIMATION_CATEGORIES.SKELETON,
+    ShimmerSkeleton,
+    animationCodes.shimmerSkeleton
+  ),
+  createAnimation(
+    'list-skeleton',
+    'List Skeleton',
+    'List item skeleton with bullets',
+    ANIMATION_CATEGORIES.SKELETON,
+    ListSkeleton,
+    animationCodes.listSkeleton
   )
 ];
 
