@@ -47,7 +47,14 @@ import {
   WaveProgress,
   MorphingProgress,
   GlowProgress,
-  SegmentedProgress
+  SegmentedProgress,
+  MinimalLinearProgress,
+  MinimalDotProgress,
+  SlimCircularProgress,
+  BreathingProgress,
+  SubtleStepProgress,
+  FlowProgress,
+  MinimalPercentage
 } from "../loaders/progress-animations";
 
 import {
@@ -56,7 +63,15 @@ import {
   AvatarSkeleton,
   WaveSkeleton,
   ShimmerSkeleton,
-  ListSkeleton
+  ListSkeleton,
+  CleanLineSkeleton,
+  MinimalBlockSkeleton,
+  SubtleShimmerSkeleton,
+  DotMatrixSkeleton,
+  FlowingSkeleton,
+  MinimalProfileSkeleton,
+  VerticalBars,
+  RefinedWaveSkeleton
 } from "../loaders/skeleton-animations";
 
 import { ANIMATION_CATEGORIES, type Animation } from "../types";
@@ -398,6 +413,62 @@ const progressAnimations: Animation[] = [
     SegmentedProgress,
     animationCodes.segmentedProgress
   ),
+  createAnimation(
+    'minimal-linear-progress',
+    'Minimal Linear',
+    'Ultra-thin linear progress bar',
+    ANIMATION_CATEGORIES.PROGRESS,
+    MinimalLinearProgress,
+    animationCodes.minimalLinearProgress
+  ),
+  createAnimation(
+    'minimal-dot-progress',
+    'Minimal Dots',
+    'Simple sequential dot indicators',
+    ANIMATION_CATEGORIES.PROGRESS,
+    MinimalDotProgress,
+    animationCodes.minimalDotProgress
+  ),
+  createAnimation(
+    'slim-circular-progress',
+    'Slim Circular',
+    'Thin circular progress with minimal design',
+    ANIMATION_CATEGORIES.PROGRESS,
+    SlimCircularProgress,
+    animationCodes.slimCircularProgress
+  ),
+  createAnimation(
+    'breathing-progress',
+    'Breathing Progress',
+    'Subtle breathing opacity animation',
+    ANIMATION_CATEGORIES.PROGRESS,
+    BreathingProgress,
+    animationCodes.breathingProgress
+  ),
+  createAnimation(
+    'subtle-step-progress',
+    'Subtle Steps',
+    'Minimalist multi-step progress indicator',
+    ANIMATION_CATEGORIES.PROGRESS,
+    SubtleStepProgress,
+    animationCodes.subtleStepProgress
+  ),
+  createAnimation(
+    'flow-progress',
+    'Flow Progress',
+    'Flowing highlight across progress bar',
+    ANIMATION_CATEGORIES.PROGRESS,
+    FlowProgress,
+    animationCodes.flowProgress
+  ),
+  createAnimation(
+    'minimal-percentage',
+    'Minimal Percentage',
+    'Clean progress bar with percentage display',
+    ANIMATION_CATEGORIES.PROGRESS,
+    MinimalPercentage,
+    animationCodes.minimalPercentage
+  ),
 ];
 
 // Skeleton Animations
@@ -449,6 +520,70 @@ const skeletonAnimations: Animation[] = [
     ANIMATION_CATEGORIES.SKELETON,
     ListSkeleton,
     animationCodes.listSkeleton
+  ),
+  createAnimation(
+    'clean-line-skeleton',
+    'Clean Lines',
+    'Ultra-minimal line placeholders',
+    ANIMATION_CATEGORIES.SKELETON,
+    CleanLineSkeleton,
+    animationCodes.cleanLineSkeleton
+  ),
+  createAnimation(
+    'minimal-block-skeleton',
+    'Minimal Block',
+    'Simple block with minimal text lines',
+    ANIMATION_CATEGORIES.SKELETON,
+    MinimalBlockSkeleton,
+    animationCodes.minimalBlockSkeleton
+  ),
+  createAnimation(
+    'subtle-shimmer-skeleton',
+    'Subtle Shimmer',
+    'Gentle shimmer effect skeleton',
+    ANIMATION_CATEGORIES.SKELETON,
+    SubtleShimmerSkeleton,
+    animationCodes.subtleShimmerSkeleton
+  ),
+  createAnimation(
+    'dot-matrix-skeleton',
+    'Dot Matrix',
+    'Grid of animated dots pattern',
+    ANIMATION_CATEGORIES.SKELETON,
+    DotMatrixSkeleton,
+    animationCodes.dotMatrixSkeleton
+  ),
+  createAnimation(
+    'flowing-skeleton',
+    'Flowing Lines',
+    'Smooth flowing gradient across lines',
+    ANIMATION_CATEGORIES.SKELETON,
+    FlowingSkeleton,
+    animationCodes.flowingSkeleton
+  ),
+  createAnimation(
+    'minimal-profile-skeleton',
+    'Minimal Profile',
+    'Clean profile skeleton with avatar',
+    ANIMATION_CATEGORIES.SKELETON,
+    MinimalProfileSkeleton,
+    animationCodes.minimalProfileSkeleton
+  ),
+  createAnimation(
+    'vertical-bars',
+    'Vertical Bars',
+    'Animated vertical bar chart skeleton',
+    ANIMATION_CATEGORIES.SKELETON,
+    VerticalBars,
+    animationCodes.verticalBars
+  ),
+  createAnimation(
+    'refined-wave-skeleton',
+    'Refined Wave',
+    'Sophisticated wave animation',
+    ANIMATION_CATEGORIES.SKELETON,
+    RefinedWaveSkeleton,
+    animationCodes.refinedWaveSkeleton
   ),
 ];
 

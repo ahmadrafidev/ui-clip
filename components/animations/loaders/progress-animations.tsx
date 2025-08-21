@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 
@@ -419,6 +420,248 @@ export function SegmentedProgress() {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+export function MinimalLinearProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.8));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-32 h-0.5 bg-white/10 overflow-hidden">
+      <motion.div
+        className="h-full bg-white"
+        style={{ width: `${progress}%` }}
+        transition={{
+          duration: 0.1,
+          ease: "linear"
+        }}
+      />
+    </div>
+  );
+}
+
+export function MinimalDotProgress() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const dots = 5;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % dots);
+    }, 400);
+    return () => clearInterval(interval);
+  }, [dots]);
+
+  return (
+    <div className="flex space-x-2">
+      {Array.from({ length: dots }, (_, i) => (
+        <motion.div
+          key={i}
+          className="w-1.5 h-1.5 rounded-full"
+          animate={{
+            backgroundColor: i === activeIndex ? 'rgb(255 255 255)' : 'rgb(255 255 255 / 0.2)',
+            scale: i === activeIndex ? 1.2 : 1,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function SlimCircularProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  const circumference = 2 * Math.PI * 14; // radius = 14
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="relative w-8 h-8">
+      <svg className="w-8 h-8 -rotate-90" viewBox="0 0 32 32">
+        <circle
+          cx="16"
+          cy="16"
+          r="14"
+          fill="none"
+          stroke="rgb(255 255 255 / 0.1)"
+          strokeWidth="1"
+        />
+        <motion.circle
+          cx="16"
+          cy="16"
+          r="14"
+          fill="none"
+          stroke="rgb(255 255 255)"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          animate={{ strokeDashoffset }}
+          transition={{
+            duration: 0.1,
+            ease: "linear"
+          }}
+        />
+      </svg>
+    </div>
+  );
+}
+
+export function BreathingProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1.2));
+    }, 60);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-1 bg-white/8 rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-white rounded-full"
+        style={{ width: `${progress}%` }}
+        animate={{
+          opacity: [0.6, 1, 0.6],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </div>
+  );
+}
+
+export function SubtleStepProgress() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = 4;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStep(prev => (prev + 1) % (steps + 1));
+    }, 1200);
+    return () => clearInterval(interval);
+  }, [steps]);
+
+  return (
+    <div className="flex items-center space-x-3">
+      {Array.from({ length: steps }, (_, i) => (
+        <React.Fragment key={i}>
+          <motion.div
+            className="w-2 h-2 rounded-full"
+            animate={{
+              backgroundColor: i < currentStep ? 'rgb(255 255 255)' : 'rgb(255 255 255 / 0.2)',
+              scale: i === currentStep - 1 ? [1, 1.4, 1] : 1,
+            }}
+            transition={{
+              duration: 0.4,
+              ease: "easeOut"
+            }}
+          />
+          {i < steps - 1 && (
+            <motion.div
+              className="w-4 h-px bg-white/20"
+              animate={{
+                backgroundColor: i < currentStep - 1 ? 'rgb(255 255 255 / 0.6)' : 'rgb(255 255 255 / 0.2)',
+              }}
+              transition={{
+                duration: 0.4,
+                delay: 0.2
+              }}
+            />
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
+export function FlowProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.6));
+    }, 40);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-1 bg-white/8 rounded-full overflow-hidden">
+      <motion.div
+        className="absolute top-0 left-0 h-full w-6 bg-gradient-to-r from-transparent via-white to-transparent rounded-full"
+        animate={{
+          x: [`-24px`, `${(progress / 100) * 128 - 12}px`],
+          opacity: progress > 5 && progress < 95 ? [0.4, 0.8, 0.4] : 0.2,
+        }}
+        transition={{
+          x: { duration: 0.1, ease: "linear" },
+          opacity: { duration: 1, repeat: Infinity, ease: "easeInOut" }
+        }}
+      />
+      <motion.div
+        className="h-full bg-white/30 rounded-full"
+        style={{ width: `${progress}%` }}
+        transition={{
+          duration: 0.1,
+          ease: "linear"
+        }}
+      />
+    </div>
+  );
+}
+
+export function MinimalPercentage() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex items-center space-x-3">
+      <div className="w-20 h-px bg-white/10">
+        <motion.div
+          className="h-full bg-white"
+          style={{ width: `${progress}%` }}
+          transition={{
+            duration: 0.1,
+            ease: "linear"
+          }}
+        />
+      </div>
+      <motion.span
+        className="text-xs font-medium text-white/80 tabular-nums"
+        key={progress}
+        initial={{ opacity: 0.5, y: 1 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        {progress}%
+      </motion.span>
     </div>
   );
 }
