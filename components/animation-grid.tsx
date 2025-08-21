@@ -82,30 +82,30 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
 
       {/* Load More Button */}
       {hasMoreAnimations && (
-        <div className="flex justify-center mt-8 md:mt-12">
+        <div className="flex justify-center mt-8 md:mt-10">
           <button
             onClick={handleLoadMore}
             disabled={isLoading}
             className={`
-              px-8 py-3 rounded-lg font-medium transition-all duration-200
+              px-8 py-3 rounded-xl font-medium text-sm
+              transition-all duration-200 ease-out
               ${isLoading 
-                ? 'bg-white/5 text-white/40 cursor-not-allowed' 
-                : 'bg-white/10 text-white hover:bg-white/20 hover:scale-[1.02]'
+                ? 'bg-zinc-800 text-white/40 cursor-not-allowed' 
+                : 'bg-zinc-800 text-white/90 hover:bg-zinc-800/80 hover:text-white hover:scale-[1.02] active:scale-98'
               }
-              border border-white/20 backdrop-blur-sm
               flex items-center gap-3
             `}
           >
             {isLoading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white/60" />
-                Loading...
+                <div className="animate-spin rounded-full h-4 w-4 border border-white/30 border-t-white/70" />
+                <span>Loading...</span>
               </>
             ) : (
               <>
-                Load More
-                <span className="text-white/60">
-                  ({displayedCount} of {filteredAnimations.length})
+                <span>Load More</span>
+                <span className="text-white/50 text-xs">
+                  {displayedCount}/{filteredAnimations.length}
                 </span>
               </>
             )}

@@ -11,7 +11,7 @@ export function HomePage() {
       <HeroSection />
 
       {/* Animation Grid */}
-      <div className="flex-1 px-4 sm:px-6 lg:px-8 pb-6 md:pb-10">
+      <div className="flex-1 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10 md:pb-12">
         <AnimationGrid animations={sampleAnimations} />
       </div>
     </section>
