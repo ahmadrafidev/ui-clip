@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "UI Clip",
-  description: "Beautiful, production-ready UI snippets and patterns for Next.js, React, and Tailwind CSS.",
+  description: "A collection of UI animations that you can copy, paste, and ship.",
 };
 
 export default function RootLayout({
