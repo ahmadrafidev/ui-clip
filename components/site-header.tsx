@@ -15,7 +15,7 @@ export function SiteHeader(
   return (
     <header className="sticky">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <Brand size="lg" />
+        <Brand size="lg" href="/" />
         <div className="flex items-center gap-2 sm:gap-3">
           <a 
             href={xUrl} 

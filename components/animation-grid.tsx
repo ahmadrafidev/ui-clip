@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { AnimationCard } from './animation-card';
 import { ANIMATION_CATEGORIES, type AnimationCategory, type Animation } from './animations/types';
+import { useLocalStorage } from './animations/utils/persistence';
 
 interface AnimationGridProps {
   animations: Animation[];
@@ -13,7 +14,11 @@ interface AnimationGridProps {
 const ITEMS_PER_PAGE = 12;
 
 export function AnimationGrid({ animations }: AnimationGridProps) {
-  const [selectedCategory, setSelectedCategory] = useState<AnimationCategory | 'all'>('all');
+  
+  const [selectedCategory, setSelectedCategory, isCategoryLoaded] = useLocalStorage<AnimationCategory | 'all'>(
+    'ui-clip-category-filter', 
+    'all'
+  );
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -42,7 +47,11 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
 
   const handleCategoryChange = useCallback((category: AnimationCategory | 'all') => {
     setSelectedCategory(category);
-  }, []);
+  }, [setSelectedCategory]);
+
+  if (!isCategoryLoaded) {
+    return null;
+  }
 
   return (
     <div className="w-full mx-auto">
