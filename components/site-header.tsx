@@ -13,7 +13,7 @@ export function SiteHeader(
   {
   const xUrl = `https://x.com/${xHandle.replace(/^@/, "")}`;
   return (
-    <header className="sticky top-0 z-50 bg-background/60 backdrop-blur-xs">
+    <header className="sticky">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <Brand size="lg" />
         <div className="flex items-center gap-2 sm:gap-3">
