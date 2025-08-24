@@ -14,7 +14,7 @@ Thank you for your interest in contributing to UI Clip! This document provides g
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/your-username/ui-clip.git
+   git clone https://github.com/ahmadrafidev/ui-clip
    cd ui-clip
    ```
 
