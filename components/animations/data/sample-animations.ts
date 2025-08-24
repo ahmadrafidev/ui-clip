@@ -54,7 +54,11 @@ import {
   BreathingProgress,
   SubtleStepProgress,
   FlowProgress,
-  MinimalPercentage
+  MinimalPercentage,
+  PieProgress,
+  AnimatedPieProgress,
+  SegmentedPieProgress,
+  GlowingPieProgress
 } from "../loaders/progress-animations";
 
 import {
@@ -468,6 +472,38 @@ const progressAnimations: Animation[] = [
     ANIMATION_CATEGORIES.PROGRESS,
     MinimalPercentage,
     animationCodes.minimalPercentage
+  ),
+  createAnimation(
+    'pie-progress',
+    'Pie Progress',
+    'Clean circular pie chart progress with percentage',
+    ANIMATION_CATEGORIES.PROGRESS,
+    PieProgress,
+    animationCodes.pieProgress
+  ),
+  createAnimation(
+    'animated-pie-progress',
+    'Animated Pie',
+    'Enhanced pie progress with pulsing center and color transitions',
+    ANIMATION_CATEGORIES.PROGRESS,
+    AnimatedPieProgress,
+    animationCodes.animatedPieProgress
+  ),
+  createAnimation(
+    'segmented-pie-progress',
+    'Segmented Pie',
+    'Pie progress with discrete segments and pulsing animation',
+    ANIMATION_CATEGORIES.PROGRESS,
+    SegmentedPieProgress,
+    animationCodes.segmentedPieProgress
+  ),
+  createAnimation(
+    'glowing-pie-progress',
+    'Glowing Pie',
+    'Premium pie progress with glow and shadow effects',
+    ANIMATION_CATEGORIES.PROGRESS,
+    GlowingPieProgress,
+    animationCodes.glowingPieProgress
   ),
 ];
 

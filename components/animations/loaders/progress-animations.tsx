@@ -665,3 +665,288 @@ export function MinimalPercentage() {
     </div>
   );
 }
+
+export function PieProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  const radius = 45;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="relative w-24 h-24">
+      <svg className="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
+        {/* Background circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255 / 0.1)"
+          strokeWidth="8"
+        />
+        {/* Progress arc */}
+        <motion.circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255)"
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          animate={{ strokeDashoffset }}
+          transition={{
+            duration: 0.2,
+            ease: "easeOut"
+          }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.span 
+          className="text-sm font-bold text-white"
+          key={Math.floor(progress)}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          {Math.round(progress)}%
+        </motion.span>
+      </div>
+    </div>
+  );
+}
+
+export function AnimatedPieProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.8));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="relative w-20 h-20">
+      <svg className="w-20 h-20 -rotate-90" viewBox="0 0 88 88">
+        {/* Background circle */}
+        <circle
+          cx="44"
+          cy="44"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255 / 0.08)"
+          strokeWidth="6"
+        />
+        {/* Animated progress arc */}
+        <motion.circle
+          cx="44"
+          cy="44"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          animate={{ 
+            strokeDashoffset,
+            stroke: [
+              'rgb(255 255 255)',
+              'rgb(255 255 255 / 0.8)',
+              'rgb(255 255 255)',
+            ]
+          }}
+          transition={{
+            strokeDashoffset: { duration: 0.1, ease: "linear" },
+            stroke: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
+        {/* Center dot with pulse */}
+        <motion.circle
+          cx="44"
+          cy="44"
+          r="3"
+          fill="rgb(255 255 255)"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.span 
+          className="text-xs font-semibold text-white/90"
+          animate={{
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          {Math.round(progress)}%
+        </motion.span>
+      </div>
+    </div>
+  );
+}
+
+export function SegmentedPieProgress() {
+  const [progress, setProgress] = useState(0);
+  const segments = 12;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 1.5));
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activeSegments = Math.floor((progress / 100) * segments);
+
+  return (
+    <div className="relative w-20 h-20">
+      <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+        {Array.from({ length: segments }, (_, i) => {
+          // const angle = (360 / segments) * i; // Not used in this component
+          const isActive = i < activeSegments;
+          const isCurrentlyFilling = i === activeSegments;
+          
+          return (
+            <motion.circle
+              key={i}
+              cx="40"
+              cy="40"
+              r="32"
+              fill="none"
+              stroke={isActive ? "rgb(255 255 255)" : "rgb(255 255 255 / 0.1)"}
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray={`${(2 * Math.PI * 32) / segments - 2} ${(2 * Math.PI * 32) / segments}`}
+              strokeDashoffset={-((2 * Math.PI * 32) / segments) * i}
+              animate={{
+                stroke: isActive 
+                  ? "rgb(255 255 255)" 
+                  : "rgb(255 255 255 / 0.1)",
+                strokeWidth: isCurrentlyFilling ? [4, 6, 4] : 4,
+              }}
+              transition={{
+                stroke: { duration: 0.3, ease: "easeOut" },
+                strokeWidth: { 
+                  duration: 0.8, 
+                  repeat: isCurrentlyFilling ? Infinity : 0,
+                  ease: "easeInOut" 
+                }
+              }}
+            />
+          );
+        })}
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.span 
+          className="text-xs font-bold text-white"
+          key={Math.floor(progress / 10)}
+          initial={{ y: 2, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {Math.round(progress)}%
+        </motion.span>
+      </div>
+    </div>
+  );
+}
+
+export function GlowingPieProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 0.9));
+    }, 60);
+    return () => clearInterval(interval);
+  }, []);
+
+  const radius = 38;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="relative w-20 h-20">
+      <svg className="w-20 h-20 -rotate-90" viewBox="0 0 84 84">
+        {/* Background circle */}
+        <circle
+          cx="42"
+          cy="42"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255 / 0.05)"
+          strokeWidth="4"
+        />
+        {/* Glowing progress arc */}
+        <motion.circle
+          cx="42"
+          cy="42"
+          r={radius}
+          fill="none"
+          stroke="rgb(255 255 255)"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          animate={{ 
+            strokeDashoffset,
+            filter: [
+              'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+              'drop-shadow(0 0 8px rgba(255,255,255,0.6))',
+              'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+            ]
+          }}
+          transition={{
+            strokeDashoffset: { duration: 0.1, ease: "linear" },
+            filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.span 
+          className="text-xs font-medium text-white"
+          animate={{
+            textShadow: [
+              '0 0 4px rgba(255,255,255,0.3)',
+              '0 0 8px rgba(255,255,255,0.5)',
+              '0 0 4px rgba(255,255,255,0.3)',
+            ]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          {Math.round(progress)}%
+        </motion.span>
+      </div>
+    </div>
+  );
+}
