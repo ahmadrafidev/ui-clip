@@ -36,18 +36,32 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
 
   const handleLoadMore = useCallback(async () => {
     if (isLoading || !hasMoreAnimations) return;
-    
+
     setIsLoading(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 300));
-    
+
     setDisplayedCount(prev => prev + ITEMS_PER_PAGE);
     setIsLoading(false);
   }, [isLoading, hasMoreAnimations]);
 
+  const handleLoadMoreKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLoadMore();
+    }
+  }, [handleLoadMore]);
+
   const handleCategoryChange = useCallback((category: AnimationCategory | 'all') => {
     setSelectedCategory(category);
   }, [setSelectedCategory]);
+
+  const handleCategoryKeyDown = useCallback((e: React.KeyboardEvent, category: AnimationCategory | 'all') => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCategoryChange(category);
+    }
+  }, [handleCategoryChange]);
 
   if (!isCategoryLoaded) {
     return null;
@@ -56,14 +70,23 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
   return (
     <div className="w-full mx-auto">
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-4 md:mb-8 justify-center">
+      <nav
+        className="flex flex-wrap gap-2 mb-4 md:mb-8 justify-center"
+        role="tablist"
+        aria-label="Animation categories"
+      >
         <button
           onClick={() => handleCategoryChange('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+          onKeyDown={(e) => handleCategoryKeyDown(e, 'all')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 ${
             selectedCategory === 'all'
               ? 'bg-white text-black'
               : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
           }`}
+          role="tab"
+          aria-selected={selectedCategory === 'all'}
+          aria-controls="animation-grid"
+          id="category-all"
         >
           All
         </button>
@@ -71,19 +94,29 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
           <button
             key={category}
             onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 capitalize ${
+            onKeyDown={(e) => handleCategoryKeyDown(e, category)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 capitalize focus:outline-none focus:ring-2 focus:ring-white/20 ${
               selectedCategory === category
                 ? 'bg-white text-black'
                 : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
             }`}
+            role="tab"
+            aria-selected={selectedCategory === category}
+            aria-controls="animation-grid"
+            id={`category-${category}`}
           >
             {category}
           </button>
         ))}
-      </div>
+      </nav>
 
       {/* Animation Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+      <div
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5"
+        id="animation-grid"
+        role="tabpanel"
+        aria-label={`Animations in ${selectedCategory} category`}
+      >
         {displayedAnimations.map((animation) => (
           <AnimationCard key={animation.id} animation={animation} />
         ))}
@@ -94,20 +127,25 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
         <div className="flex justify-center mt-8 md:mt-10">
           <button
             onClick={handleLoadMore}
+            onKeyDown={handleLoadMoreKeyDown}
             disabled={isLoading}
             className={`
               px-8 py-3 rounded-xl font-medium text-sm
-              transition-all duration-200 ease-out
-              ${isLoading 
-                ? 'bg-zinc-800 text-white/40 cursor-not-allowed' 
+              transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-white/20
+              ${isLoading
+                ? 'bg-zinc-800 text-white/40 cursor-not-allowed'
                 : 'bg-zinc-800 text-white/90 hover:bg-zinc-800/80 hover:text-white hover:scale-[1.02] active:scale-98'
               }
               flex items-center gap-3
             `}
+            aria-label={`${isLoading ? 'Loading more animations' : `Load more animations (${filteredAnimations.length - displayedCount} remaining)`}`}
           >
             {isLoading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border border-white/30 border-t-white/70" />
+                <div
+                  className="animate-spin rounded-full h-4 w-4 border border-white/30 border-t-white/70"
+                  aria-hidden="true"
+                />
                 <span>Loading...</span>
               </>
             ) : (
@@ -124,7 +162,11 @@ export function AnimationGrid({ animations }: AnimationGridProps) {
 
       {/* Empty State */}
       {filteredAnimations.length === 0 && (
-        <div className="text-center py-10">
+        <div
+          className="text-center py-10"
+          role="status"
+          aria-live="polite"
+        >
           <div className="text-white/50 text-lg mb-2">No animations found</div>
           <div className="text-white/30 text-sm">
             Try selecting a different category

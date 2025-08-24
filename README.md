@@ -13,14 +13,28 @@ A collection of animated UI components built with Base UI and Motion. Copy, past
 This project is experimental and created for sharing innovative UI component ideas with the community. The goal is to explore creative possibilities with modern animation libraries and provide developers with inspiring examples they can learn from and adapt to their own projects.
 
 
+## 🤝 Contributing
+
+We welcome contributions! Whether you're fixing bugs, adding new animations, or improving documentation, your help is appreciated.
+
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Tech Stack
 
 Built with modern web technologies for optimal performance and developer experience. The project uses **Next.js** as the React framework, **Base UI** for accessible component primitives, **Motion** for smooth animations, and **Tailwind CSS** for styling.
 
+## 🐛 Reporting Issues
 
+Found a bug? We'd love to fix it! Please:
 
-## License
+1. **Check existing issues** first
+2. **Create a new issue** with:
+   - Clear description
+   - Steps to reproduce
+   - Browser and OS information
+   - Screenshots if applicable
+
+## 📄 License
 
 This project is licensed under the [MIT License](/LICENSE).
 

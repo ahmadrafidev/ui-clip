@@ -10,6 +10,7 @@ export interface Animation {
   category: string;
   component: () => React.ReactElement;
   code: string;
+  componentPath?: string;
 }
 
 /**
