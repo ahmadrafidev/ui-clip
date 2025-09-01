@@ -14,12 +14,12 @@ export default function NotFound() {
               404
             </div>
             <h1 className="text-xl md:text-2xl font-medium text-white/90">
-              This clip doesn't exist
+              This clip doesn&apos;t exist
             </h1>
           </div>
           
           <p className="text-white/60 max-w-sm mx-auto text-balance">
-            The page you're looking for has been moved or deleted.
+            The page you&apos;re looking for has been moved or deleted.
           </p>
           
           <Link
